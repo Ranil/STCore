@@ -7,6 +7,8 @@ import org.bukkit.inventory.ItemStack;
 
 import lombok.Getter;
 import me.Ranil.STCore.ShatteredTears;
+import me.Ranil.STCore.enums.ClassType;
+import me.Ranil.STCore.enums.RaceType;
 
 public class PlayerStats {
 
@@ -205,6 +207,11 @@ public class PlayerStats {
 	
 	public RaceType getRace(Player player){
 		String race = plugin.config.getString(player.getName()+".race");
-		return RaceType.
+		return RaceType.getRaceFromString(race);
+	}
+	
+	public ClassType getClass(Player player){
+		String type = plugin.config.getString(player.getName()+".class");
+		return ClassType.getClassFromString(type);
 	}
 }
