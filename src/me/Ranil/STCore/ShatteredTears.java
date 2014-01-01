@@ -46,20 +46,15 @@ public class ShatteredTears extends JavaPlugin {
 		registerCommand("stname");
 
 		this.config = getConfig();
+		
+		for(Player p : Bukkit.getOnlinePlayers()){
+			reloadPlayerConfig(p);
+		}
 	}
 
 	public void onDisable() {
 		for (Player p : Bukkit.getOnlinePlayers()) {
-			/*
-			 * playerFile = new File(playerDir, p.getName() + ".yml");
-			 * playerConfig = YamlConfiguration.loadConfiguration(playerFile);
-			 * try {
-			 * 
-			 * playerConfig.save(playerFile); } catch (IOException e) {
-			 * 
-			 * Bukkit.getLogger().log(Level.SEVERE, "Couldn't save player file",
-			 * e); }
-			 */
+			savePlayerConfig(p);
 		}
 	}
 
