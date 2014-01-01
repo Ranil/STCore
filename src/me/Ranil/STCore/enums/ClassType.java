@@ -4,6 +4,7 @@ public enum ClassType {
 	WARRIOR, ASSASSIN, WITCHDOCTOR, PALADIN, CITIZEN, BOWMAN, TAMER, GADGETEER, MAGE;
 
 	public static ClassType getClassFromString(String classname) {
+		classname = classname.toLowerCase();
 		switch (classname) {
 		case "warrior":
 			return WARRIOR;
@@ -27,6 +28,7 @@ public enum ClassType {
 	}
 
 	public static String classAbrev(ClassType classType) {
+
 		switch (classType) {
 		case WARRIOR:
 			return "§cWAR";

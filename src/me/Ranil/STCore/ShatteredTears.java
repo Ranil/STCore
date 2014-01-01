@@ -2,6 +2,7 @@ package me.Ranil.STCore;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Random;
 import java.util.logging.Level;
 
 import lombok.Getter;
@@ -99,11 +100,31 @@ public class ShatteredTears extends JavaPlugin {
 		}
 		return RaceType.NONE;
 	}
+
 	public ClassType getClass(Player player) {
 		FileConfiguration playerConfig = getPlayerConfig(player);
 		if (RaceType.getRaceFromString(playerConfig.getString("class")) != null) {
-			return ClassType.getClassFromString(playerConfig.getString("class"));
+			return ClassType
+					.getClassFromString(playerConfig.getString("class"));
 		}
 		return ClassType.CITIZEN;
+	}
+
+	public int getRandFromLevel(int level) {
+		Random rand = new Random();
+		if (level < 10) {
+			return 15;
+		} else if (level > 10 && level < 20) {
+			return rand.nextInt(10) + 20;
+		} else if (level > 20 && level < 30) {
+			return rand.nextInt(20) + 25;
+		} else if (level > 30 && level < 40) {
+			return rand.nextInt(30) + 30;
+		} else if (level > 40 && level < 50) {
+			return rand.nextInt(45) + 40;
+		} else if (level == 50) {
+			return rand.nextInt(60) + 40;
+		}
+		return 1;
 	}
 }

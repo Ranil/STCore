@@ -21,6 +21,7 @@ public enum RaceType {
 	}
 
 	public static RaceType getRaceFromString(String race) {
+		race = race.toLowerCase();
 		switch (race) {
 		case "human":
 			return HUMAN;
