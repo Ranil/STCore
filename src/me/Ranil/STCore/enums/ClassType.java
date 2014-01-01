@@ -5,24 +5,47 @@ public enum ClassType {
 
 	public static ClassType getClassFromString(String classname) {
 		switch (classname) {
-		case "Warrior":
+		case "warrior":
 			return WARRIOR;
-		case "Assassin":
+		case "assassin":
 			return ASSASSIN;
-		case "Witchdoctor":
+		case "witchdoctor":
 			return WITCHDOCTOR;
-		case "Paladin":
+		case "paladin":
 			return PALADIN;
-		case "Bowman":
+		case "bowman":
 			return BOWMAN;
-		case "Tamer":
+		case "tamer":
 			return TAMER;
-		case "Gadgeteer":
+		case "gadgeteer":
 			return GADGETEER;
-		case "Mage":
+		case "mage":
 			return MAGE;
 		default:
 			return CITIZEN;
+		}
+	}
+
+	public static String classAbrev(ClassType classType) {
+		switch (classType) {
+		case WARRIOR:
+			return "§cWAR";
+		case ASSASSIN:
+			return "§dASN";
+		case WITCHDOCTOR:
+			return "§5WIT";
+		case PALADIN:
+			return "§6PAL";
+		case BOWMAN:
+			return "§2BOW";
+		case TAMER:
+			return "§eTAM";
+		case GADGETEER:
+			return "§9GAD";
+		case MAGE:
+			return "§1MAG";
+		default:
+			return "§bCIT";
 		}
 	}
 }

@@ -3,16 +3,27 @@ package me.Ranil.STCore.commands;
 import java.util.ArrayList;
 import java.util.List;
 
+import me.Ranil.STCore.ShatteredTears;
+import me.Ranil.STCore.enums.ClassType;
+import me.Ranil.STCore.enums.RaceType;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 public class AdminCommands implements CommandExecutor {
+
+	private ShatteredTears plugin;
+
+	public AdminCommands(ShatteredTears instance) {
+		this.plugin = instance;
+	}
 
 	public boolean onCommand(CommandSender sender, Command cmd, String label,
 			String[] args) {
@@ -42,12 +53,76 @@ public class AdminCommands implements CommandExecutor {
 					}
 				}
 			}
-			if(cmd.getName().equalsIgnoreCase("stname")){
-				if(args.length!=1){
-					player.sendMessage(ChatColor.RED + "Usage: /stname <display_name>");
+
+			if (cmd.getName().equalsIgnoreCase("forcerace")) {
+				if (args.length == 2) {
+					if (Bukkit.getServer().getPlayerExact(args[0]) != null) {
+						Player targetPlayer = Bukkit.getServer()
+								.getPlayerExact(args[0]);
+						if (RaceType.getRaceFromString(args[1].toLowerCase()) != null) {
+							FileConfiguration playerConfig = plugin
+									.getPlayerConfig(targetPlayer);
+							playerConfig.set("race", args[1].toLowerCase());
+							player.sendMessage(ChatColor.AQUA
+									+ "Set "
+									+ ChatColor.GOLD
+									+ targetPlayer.getName()
+									+ ChatColor.AQUA
+									+ " to race "
+									+ RaceType.getAbrev(RaceType
+											.getRaceFromString(args[1])));
+							plugin.savePlayerConfig(targetPlayer);
+						} else {
+							player.sendMessage(ChatColor.RED + "Invalid race!");
+						}
+					} else {
+						player.sendMessage(ChatColor.RED
+								+ "Couldn't find a player by that name.");
+					}
+				} else {
+					player.sendMessage(ChatColor.RED
+							+ "Usage: /forcerace <player> <race>");
+				}
+			}
+
+			if (cmd.getName().equalsIgnoreCase("forceclass")) {
+				if (args.length == 2) {
+					if (Bukkit.getServer().getPlayerExact(args[0]) != null) {
+						Player targetPlayer = Bukkit.getServer()
+								.getPlayerExact(args[0]);
+						if (ClassType.getClassFromString(args[1].toLowerCase()) != null) {
+							FileConfiguration playerConfig = plugin
+									.getPlayerConfig(targetPlayer);
+							playerConfig.set("class", args[1].toLowerCase());
+							player.sendMessage(ChatColor.AQUA
+									+ "Set "
+									+ ChatColor.GOLD
+									+ targetPlayer.getName()
+									+ ChatColor.AQUA
+									+ " to class "
+									+ ClassType.classAbrev(ClassType
+											.getClassFromString(args[1]
+													.toLowerCase())));
+						} else {
+							player.sendMessage(ChatColor.RED + "Invalid Class!");
+						}
+					} else {
+						player.sendMessage(ChatColor.RED
+								+ "Couldn't find a player by that name.");
+					}
+				} else {
+					player.sendMessage(ChatColor.RED
+							+ "Usage: /forceclass <player> <class>");
+				}
+			}
+
+			if (cmd.getName().equalsIgnoreCase("stname")) {
+				if (args.length != 1) {
+					player.sendMessage(ChatColor.RED
+							+ "Usage: /stname <display_name>");
 				}
 				ItemStack item = player.getItemInHand();
-				if(item != null){
+				if (item != null) {
 					String line = args[0].toString();
 					line.replace("_", " ");
 					item.getItemMeta().setDisplayName(line);

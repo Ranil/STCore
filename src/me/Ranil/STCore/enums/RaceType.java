@@ -1,24 +1,18 @@
 package me.Ranil.STCore.enums;
 
 public enum RaceType {
-	HUMAN, DWARF, WOODELF, KHAJIIT, ORC, GOBLIN, DARKELF, ARGONIAN, NONE;
+	HUMAN, DWARF, WOODELF, KAHJIIT, ORC, GOBLIN, DARKELF, ARGONIAN, NONE;
 
 	public static String getFaction(RaceType race) {
 		switch (race) {
 		case HUMAN:
-			return "TERIAN";
 		case DWARF:
-			return "TERIAN";
 		case WOODELF:
-			return "TERIAN";
-		case KHAJIIT:
+		case KAHJIIT:
 			return "TERIAN";
 		case ORC:
-			return "FEKKIX";
 		case GOBLIN:
-			return "FEKKIX";
 		case DARKELF:
-			return "FEKKIX";
 		case ARGONIAN:
 			return "FEKKIX";
 		default:
@@ -28,24 +22,47 @@ public enum RaceType {
 
 	public static RaceType getRaceFromString(String race) {
 		switch (race) {
-		case "Human":
+		case "human":
 			return HUMAN;
-		case "Dwarf":
+		case "dwarf":
 			return DWARF;
-		case "Woodelf":
+		case "woodelf":
 			return WOODELF;
-		case "Khajiit":
-			return KHAJIIT;
-		case "Orc":
+		case "kahjiit":
+			return KAHJIIT;
+		case "orc":
 			return ORC;
-		case "Goblin":
+		case "goblin":
 			return GOBLIN;
-		case "Darkelf":
+		case "darkelf":
 			return DARKELF;
-		case "Argonian":
+		case "argonian":
 			return ARGONIAN;
 		default:
 			return NONE;
+		}
+	}
+
+	public static String getAbrev(RaceType race) {
+		switch (race) {
+		case HUMAN:
+			return "§3HUM";
+		case DWARF:
+			return "§8DWA";
+		case WOODELF:
+			return "§2WDE";
+		case KAHJIIT:
+			return "§6KHA";
+		case ORC:
+			return "§4ORC";
+		case GOBLIN:
+			return "§aGOB";
+		case DARKELF:
+			return "§7DRE";
+		case ARGONIAN:
+			return "§cARG";
+		default:
+			return "NON";
 		}
 	}
 }

@@ -204,14 +204,4 @@ public class PlayerStats {
 		}
 		return amount;
 	}
-	
-	public RaceType getRace(Player player){
-		String race = plugin.config.getString(player.getName()+".race");
-		return RaceType.getRaceFromString(race);
-	}
-	
-	public ClassType getClass(Player player){
-		String type = plugin.config.getString(player.getName()+".class");
-		return ClassType.getClassFromString(type);
-	}
 }

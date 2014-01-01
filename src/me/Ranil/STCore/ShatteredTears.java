@@ -6,6 +6,8 @@ import java.util.logging.Level;
 
 import lombok.Getter;
 import me.Ranil.STCore.commands.AdminCommands;
+import me.Ranil.STCore.enums.ClassType;
+import me.Ranil.STCore.enums.RaceType;
 import me.Ranil.STCore.events.DamageEvents;
 import me.Ranil.STCore.events.EquipEvents;
 import me.Ranil.STCore.events.PlayerEvents;
@@ -42,12 +44,14 @@ public class ShatteredTears extends JavaPlugin {
 		pm.registerEvents(de, this);
 		pm.registerEvents(pe, this);
 
-		registerCommand("ststats");
-		registerCommand("stname");
+		registerAdminCommand("ststats");
+		registerAdminCommand("stname");
+		registerAdminCommand("forcerace");
+		registerAdminCommand("forceclass");
 
 		this.config = getConfig();
-		
-		for(Player p : Bukkit.getOnlinePlayers()){
+
+		for (Player p : Bukkit.getOnlinePlayers()) {
 			reloadPlayerConfig(p);
 		}
 	}
@@ -58,8 +62,8 @@ public class ShatteredTears extends JavaPlugin {
 		}
 	}
 
-	public void registerCommand(String cmd) {
-		this.getCommand(cmd).setExecutor(new AdminCommands());
+	public void registerAdminCommand(String cmd) {
+		this.getCommand(cmd).setExecutor(new AdminCommands(this));
 	}
 
 	public void reloadPlayerConfig(Player player) {
@@ -75,15 +79,31 @@ public class ShatteredTears extends JavaPlugin {
 		}
 		return playerConfig;
 	}
-	
-	public void savePlayerConfig(Player player){
-		if(playerConfig==null || playerFile == null){
+
+	public void savePlayerConfig(Player player) {
+		if (playerConfig == null || playerFile == null) {
 			return;
 		}
-		try{
+		try {
 			getPlayerConfig(player).save(playerFile);
-		} catch(IOException ex){
-			getLogger().log(Level.SEVERE, "Couldn't save file " + playerFile, ex);
+		} catch (IOException ex) {
+			getLogger().log(Level.SEVERE, "Couldn't save file " + playerFile,
+					ex);
 		}
+	}
+
+	public RaceType getRace(Player player) {
+		FileConfiguration playerConfig = getPlayerConfig(player);
+		if (RaceType.getRaceFromString(playerConfig.getString("race")) != null) {
+			return RaceType.getRaceFromString(playerConfig.getString("race"));
+		}
+		return RaceType.NONE;
+	}
+	public ClassType getClass(Player player) {
+		FileConfiguration playerConfig = getPlayerConfig(player);
+		if (RaceType.getRaceFromString(playerConfig.getString("class")) != null) {
+			return ClassType.getClassFromString(playerConfig.getString("class"));
+		}
+		return ClassType.CITIZEN;
 	}
 }
