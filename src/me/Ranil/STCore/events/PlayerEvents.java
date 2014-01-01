@@ -1,7 +1,14 @@
 package me.Ranil.STCore.events;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+
 import me.Ranil.STCore.ShatteredTears;
 
+import org.bukkit.Bukkit;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -13,20 +20,23 @@ public class PlayerEvents implements Listener {
 
 	public PlayerEvents(ShatteredTears instance) {
 		this.plugin = instance;
+
 	}
-	
+
 	@EventHandler
-	public void onPlayerJoin(PlayerJoinEvent e){
+	public void onPlayerJoin(PlayerJoinEvent e) {
 		Player player = e.getPlayer();
-		if(!plugin.config.contains(player.getName()+".race")){
-			plugin.config.set(player.getName()+".race", "None");
-			plugin.saveConfig();
-			player.sendMessage("No race found, setting to default.");
+		FileConfiguration playerConfig = plugin.getPlayerConfig(player);
+
+		if (!playerConfig.contains("race")) {
+			playerConfig.set("race", "none");
+			plugin.savePlayerConfig(player);
+
 		}
-		if(!plugin.config.contains(player.getName()+".class")){
-			plugin.config.set(player.getName()+".class", "Citizen");
-			plugin.saveConfig();
-			player.sendMessage("No class found, set to Citizen.");
+		if (!playerConfig.contains("class")) {
+			playerConfig.set("class", "Citizen");
+			plugin.savePlayerConfig(player);
+			player.sendMessage("Set class to default");
 		}
 	}
 }
