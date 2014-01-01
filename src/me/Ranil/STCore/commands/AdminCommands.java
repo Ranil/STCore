@@ -6,6 +6,7 @@ import java.util.List;
 import me.Ranil.STCore.ShatteredTears;
 import me.Ranil.STCore.enums.ClassType;
 import me.Ranil.STCore.enums.RaceType;
+import me.Ranil.STCore.enums.RankType;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -103,6 +104,7 @@ public class AdminCommands implements CommandExecutor {
 									+ ClassType.classAbrev(ClassType
 											.getClassFromString(args[1]
 													.toLowerCase())));
+							plugin.savePlayerConfig(targetPlayer);
 						} else {
 							player.sendMessage(ChatColor.RED + "Invalid Class!");
 						}
@@ -113,6 +115,39 @@ public class AdminCommands implements CommandExecutor {
 				} else {
 					player.sendMessage(ChatColor.RED
 							+ "Usage: /forceclass <player> <class>");
+				}
+			}
+
+			if (cmd.getName().equalsIgnoreCase("setrank")) {
+				if (args.length == 2) {
+					if (Bukkit.getServer().getPlayerExact(args[0]) != null) {
+						Player targetPlayer = Bukkit.getServer()
+								.getPlayerExact(args[0]);
+						if (RankType.getRankFromString(args[1].toLowerCase()) != null) {
+							FileConfiguration playerConfig = plugin
+									.getPlayerConfig(targetPlayer);
+							playerConfig.set("rank", args[1].toLowerCase());
+							player.sendMessage(ChatColor.AQUA
+									+ "Set "
+									+ ChatColor.GOLD
+									+ targetPlayer.getName()
+									+ ChatColor.AQUA
+									+ " to rank "
+									+ RankType.getPrefix(RankType
+											.getRankFromString(args[1]
+													.toLowerCase())));
+							plugin.savePlayerConfig(targetPlayer);
+						} else {
+							player.sendMessage(ChatColor.RED + "Invalid rank!");
+						}
+					} else {
+						player.sendMessage(ChatColor.RED
+								+ "Couldn't find a player by that name!");
+					}
+
+				} else {
+					player.sendMessage(ChatColor.RED
+							+ "Usage: /setrank <player> <rank>");
 				}
 			}
 

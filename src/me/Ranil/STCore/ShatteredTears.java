@@ -9,6 +9,7 @@ import lombok.Getter;
 import me.Ranil.STCore.commands.AdminCommands;
 import me.Ranil.STCore.enums.ClassType;
 import me.Ranil.STCore.enums.RaceType;
+import me.Ranil.STCore.enums.RankType;
 import me.Ranil.STCore.events.DamageEvents;
 import me.Ranil.STCore.events.EquipEvents;
 import me.Ranil.STCore.events.PlayerEvents;
@@ -49,6 +50,7 @@ public class ShatteredTears extends JavaPlugin {
 		registerAdminCommand("stname");
 		registerAdminCommand("forcerace");
 		registerAdminCommand("forceclass");
+		registerAdminCommand("setrank");
 
 		this.config = getConfig();
 
@@ -103,11 +105,19 @@ public class ShatteredTears extends JavaPlugin {
 
 	public ClassType getClass(Player player) {
 		FileConfiguration playerConfig = getPlayerConfig(player);
-		if (RaceType.getRaceFromString(playerConfig.getString("class")) != null) {
+		if (ClassType.getClassFromString(playerConfig.getString("class")) != null) {
 			return ClassType
 					.getClassFromString(playerConfig.getString("class"));
 		}
 		return ClassType.CITIZEN;
+	}
+
+	public RankType getRank(Player player) {
+		FileConfiguration playerConfig = getPlayerConfig(player);
+		if (RankType.getRankFromString(playerConfig.getString("rank")) != null) {
+			return RankType.getRankFromString(playerConfig.getString("rank"));
+		}
+		return RankType.MEMBER;
 	}
 
 	public int getRandFromLevel(int level) {

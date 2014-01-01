@@ -3,6 +3,7 @@ package me.Ranil.STCore.events;
 import me.Ranil.STCore.ShatteredTears;
 import me.Ranil.STCore.enums.ClassType;
 import me.Ranil.STCore.enums.RaceType;
+import me.Ranil.STCore.enums.RankType;
 
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -26,11 +27,11 @@ public class PlayerEvents implements Listener {
 	public void onPlayerChat(AsyncPlayerChatEvent e) {
 		Player player = e.getPlayer();
 		FileConfiguration playerConfig = plugin.getPlayerConfig(player);
-		RaceType race = RaceType.getRaceFromString(playerConfig
-				.getString("race"));
-		ClassType classType = ClassType.getClassFromString(playerConfig
-				.getString("class"));
-		e.setFormat(ChatColor.GRAY + "[" + RaceType.getAbrev(race) + " "
+		RankType rank = plugin.getRank(player);
+		RaceType race = plugin.getRace(player);
+		ClassType classType = plugin.getClass(player);
+		e.setFormat(RankType.getPrefix(rank) + ChatColor.GRAY + "["
+				+ RaceType.getAbrev(race) + " "
 				+ ClassType.classAbrev(classType) + ChatColor.GRAY + "]"
 				+ player.getName() + ": " + ChatColor.WHITE + e.getMessage());
 	}
@@ -50,6 +51,10 @@ public class PlayerEvents implements Listener {
 			plugin.savePlayerConfig(player);
 			player.sendMessage("Set class to default");
 		}
+		if(!playerConfig.contains("rank")){
+			playerConfig.set("rank", "member");
+			plugin.savePlayerConfig(player);
+		}
 	}
 
 	@EventHandler
@@ -61,7 +66,8 @@ public class PlayerEvents implements Listener {
 				if (RaceType.getFaction(plugin.getRace(player)) == RaceType
 						.getFaction(plugin.getRace(attacker))) {
 					e.setCancelled(true);
-					attacker.sendMessage(ChatColor.RED + "You can't attack players in your faction!");
+					attacker.sendMessage(ChatColor.RED
+							+ "You can't attack players in your faction!");
 				}
 			}
 		}
