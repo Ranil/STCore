@@ -21,25 +21,29 @@ public enum RaceType {
 	}
 
 	public static RaceType getRaceFromString(String race) {
-		race = race.toLowerCase();
-		switch (race) {
-		case "human":
-			return HUMAN;
-		case "dwarf":
-			return DWARF;
-		case "woodelf":
-			return WOODELF;
-		case "kahjiit":
-			return KAHJIIT;
-		case "orc":
-			return ORC;
-		case "goblin":
-			return GOBLIN;
-		case "darkelf":
-			return DARKELF;
-		case "argonian":
-			return ARGONIAN;
-		default:
+		if (race != null) {
+			race = race.toLowerCase();
+			switch (race) {
+			case "human":
+				return HUMAN;
+			case "dwarf":
+				return DWARF;
+			case "woodelf":
+				return WOODELF;
+			case "kahjiit":
+				return KAHJIIT;
+			case "orc":
+				return ORC;
+			case "goblin":
+				return GOBLIN;
+			case "darkelf":
+				return DARKELF;
+			case "argonian":
+				return ARGONIAN;
+			default:
+				return NONE;
+			}
+		} else {
 			return NONE;
 		}
 	}

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import me.Ranil.STCore.ShatteredTears;
+import me.Ranil.STCore.api.PlayerFile;
 import me.Ranil.STCore.enums.ClassType;
 import me.Ranil.STCore.enums.RaceType;
 import me.Ranil.STCore.enums.RankType;
@@ -61,8 +62,7 @@ public class AdminCommands implements CommandExecutor {
 						Player targetPlayer = Bukkit.getServer()
 								.getPlayerExact(args[0]);
 						if (RaceType.getRaceFromString(args[1].toLowerCase()) != null) {
-							FileConfiguration playerConfig = plugin
-									.getPlayerConfig(targetPlayer);
+							PlayerFile playerConfig = plugin.getPlayerYaml(targetPlayer);
 							playerConfig.set("race", args[1].toLowerCase());
 							player.sendMessage(ChatColor.AQUA
 									+ "Set "
@@ -72,7 +72,7 @@ public class AdminCommands implements CommandExecutor {
 									+ " to race "
 									+ RaceType.getAbrev(RaceType
 											.getRaceFromString(args[1])));
-							plugin.savePlayerConfig(targetPlayer);
+							playerConfig.save();
 						} else {
 							player.sendMessage(ChatColor.RED + "Invalid race!");
 						}
@@ -92,8 +92,7 @@ public class AdminCommands implements CommandExecutor {
 						Player targetPlayer = Bukkit.getServer()
 								.getPlayerExact(args[0]);
 						if (ClassType.getClassFromString(args[1].toLowerCase()) != null) {
-							FileConfiguration playerConfig = plugin
-									.getPlayerConfig(targetPlayer);
+							PlayerFile playerConfig = plugin.getPlayerYaml(targetPlayer);
 							playerConfig.set("class", args[1].toLowerCase());
 							player.sendMessage(ChatColor.AQUA
 									+ "Set "
@@ -104,7 +103,7 @@ public class AdminCommands implements CommandExecutor {
 									+ ClassType.classAbrev(ClassType
 											.getClassFromString(args[1]
 													.toLowerCase())));
-							plugin.savePlayerConfig(targetPlayer);
+							playerConfig.save();
 						} else {
 							player.sendMessage(ChatColor.RED + "Invalid Class!");
 						}
@@ -124,8 +123,8 @@ public class AdminCommands implements CommandExecutor {
 						Player targetPlayer = Bukkit.getServer()
 								.getPlayerExact(args[0]);
 						if (RankType.getRankFromString(args[1].toLowerCase()) != null) {
-							FileConfiguration playerConfig = plugin
-									.getPlayerConfig(targetPlayer);
+							
+							PlayerFile playerConfig = plugin.getPlayerYaml(targetPlayer);
 							playerConfig.set("rank", args[1].toLowerCase());
 							player.sendMessage(ChatColor.AQUA
 									+ "Set "
@@ -136,7 +135,7 @@ public class AdminCommands implements CommandExecutor {
 									+ RankType.getPrefix(RankType
 											.getRankFromString(args[1]
 													.toLowerCase())));
-							plugin.savePlayerConfig(targetPlayer);
+							playerConfig.save();
 						} else {
 							player.sendMessage(ChatColor.RED + "Invalid rank!");
 						}

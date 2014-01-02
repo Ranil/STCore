@@ -1,11 +1,10 @@
 package me.Ranil.STCore;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.Random;
-import java.util.logging.Level;
 
 import lombok.Getter;
+import me.Ranil.STCore.api.PlayerFile;
 import me.Ranil.STCore.commands.AdminCommands;
 import me.Ranil.STCore.enums.ClassType;
 import me.Ranil.STCore.enums.RaceType;
@@ -17,19 +16,15 @@ import me.Ranil.STCore.events.TutorialEvents;
 
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.yaml.snakeyaml.Yaml;
 
 public class ShatteredTears extends JavaPlugin {
 
 	@Getter
 	public static ShatteredTears instance;
-
-	private File playerDir = new File(getDataFolder(), "Players");
-	private File playerFile = null;
-	private FileConfiguration playerConfig = null;
 
 	public FileConfiguration config;
 
@@ -57,39 +52,29 @@ public class ShatteredTears extends JavaPlugin {
 	}
 
 	public void onDisable() {
-		for (Player p : Bukkit.getOnlinePlayers()) {
-			savePlayerConfig(p);
-		}
+
 	}
 
 	public void registerAdminCommand(String cmd) {
 		this.getCommand(cmd).setExecutor(new AdminCommands(this));
 	}
 
-	public void reloadPlayerConfig(Player player) {
-		playerFile = new File(playerDir, player.getName() + ".yml");
-		playerConfig = YamlConfiguration.loadConfiguration(playerFile);
+	public PlayerFile getPlayerYaml(Player player) {
+		return new PlayerFile(getDataFolder().getAbsolutePath()
+				+ File.separator + "stdata" + File.separator + "players"
+				+ File.separator + player.getName() + ".yml");
 	}
 
-	public FileConfiguration getPlayerConfig(Player player) {
-		reloadPlayerConfig(player);
-		return playerConfig;
-	}
+	public PlayerFile getOfflinePlayerYaml(String string) {
 
-	public void savePlayerConfig(Player player) {
-		if (playerConfig == null || playerFile == null) {
-			return;
-		}
-		try {
-			getPlayerConfig(player).save(playerFile);
-		} catch (IOException ex) {
-			getLogger().log(Level.SEVERE, "Couldn't save file " + playerFile,
-					ex);
-		}
+		return new PlayerFile(getDataFolder().getAbsolutePath()
+				+ File.separator + "stdata" + File.separator + "players"
+				+ File.separator + string + ".yml");
+
 	}
 
 	public RaceType getRace(Player player) {
-		FileConfiguration playerConfig = getPlayerConfig(player);
+		PlayerFile playerConfig = getPlayerYaml(player);
 		if (RaceType.getRaceFromString(playerConfig.getString("race")) != null) {
 			return RaceType.getRaceFromString(playerConfig.getString("race"));
 		}
@@ -97,7 +82,7 @@ public class ShatteredTears extends JavaPlugin {
 	}
 
 	public ClassType getClass(Player player) {
-		FileConfiguration playerConfig = getPlayerConfig(player);
+		PlayerFile playerConfig = getPlayerYaml(player);
 		if (ClassType.getClassFromString(playerConfig.getString("class")) != null) {
 			return ClassType
 					.getClassFromString(playerConfig.getString("class"));
@@ -106,7 +91,7 @@ public class ShatteredTears extends JavaPlugin {
 	}
 
 	public RankType getRank(Player player) {
-		FileConfiguration playerConfig = getPlayerConfig(player);
+		PlayerFile playerConfig = getPlayerYaml(player);
 		if (RankType.getRankFromString(playerConfig.getString("rank")) != null) {
 			return RankType.getRankFromString(playerConfig.getString("rank"));
 		}

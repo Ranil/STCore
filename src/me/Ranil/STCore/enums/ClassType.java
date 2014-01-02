@@ -4,25 +4,29 @@ public enum ClassType {
 	WARRIOR, ASSASSIN, WITCHDOCTOR, PALADIN, CITIZEN, BOWMAN, TAMER, GADGETEER, MAGE;
 
 	public static ClassType getClassFromString(String classname) {
-		classname = classname.toLowerCase();
-		switch (classname) {
-		case "warrior":
-			return WARRIOR;
-		case "assassin":
-			return ASSASSIN;
-		case "witchdoctor":
-			return WITCHDOCTOR;
-		case "paladin":
-			return PALADIN;
-		case "bowman":
-			return BOWMAN;
-		case "tamer":
-			return TAMER;
-		case "gadgeteer":
-			return GADGETEER;
-		case "mage":
-			return MAGE;
-		default:
+		if (classname != null) {
+			classname = classname.toLowerCase();
+			switch (classname) {
+			case "warrior":
+				return WARRIOR;
+			case "assassin":
+				return ASSASSIN;
+			case "witchdoctor":
+				return WITCHDOCTOR;
+			case "paladin":
+				return PALADIN;
+			case "bowman":
+				return BOWMAN;
+			case "tamer":
+				return TAMER;
+			case "gadgeteer":
+				return GADGETEER;
+			case "mage":
+				return MAGE;
+			default:
+				return CITIZEN;
+			}
+		} else {
 			return CITIZEN;
 		}
 	}

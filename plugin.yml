@@ -1,0 +1,15 @@
+name: STCore
+main: me.Ranil.STCore.ShatteredTears
+version: 0.0.1
+author: Ranil
+commands:
+  ststats:
+    description: Set an item's stats.
+  stname:
+    description: Change an item's name.
+  forcerace:
+    description: Force a player to a specific race.
+  forceclass:
+    description: Force a player to a specific class.
+  setrank:
+    description: Set a players rank.

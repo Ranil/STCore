@@ -1,6 +1,7 @@
 package me.Ranil.STCore.events;
 
 import me.Ranil.STCore.ShatteredTears;
+import me.Ranil.STCore.api.PlayerFile;
 import me.Ranil.STCore.enums.ClassType;
 import me.Ranil.STCore.enums.RaceType;
 import me.Ranil.STCore.enums.RankType;
@@ -26,12 +27,11 @@ public class PlayerEvents implements Listener {
 	@EventHandler
 	public void onPlayerChat(AsyncPlayerChatEvent e) {
 		Player player = e.getPlayer();
-		FileConfiguration playerConfig = plugin.getPlayerConfig(player);
+		PlayerFile playerConfig = plugin.getPlayerYaml(player);
 		RankType rank = RankType.getRankFromString(playerConfig
 				.getString("rank"));
 		RaceType race = RaceType.getRaceFromString(playerConfig
 				.getString("race"));
-		;
 		ClassType classType = ClassType.getClassFromString(playerConfig
 				.getString("class"));
 		e.setFormat(RankType.getPrefix(rank) + ChatColor.GRAY + "["
@@ -43,22 +43,21 @@ public class PlayerEvents implements Listener {
 	@EventHandler
 	public void onPlayerJoin(PlayerJoinEvent e) {
 		Player player = e.getPlayer();
-		FileConfiguration playerConfig = plugin.getPlayerConfig(player);
+		PlayerFile playerConfig = plugin.getPlayerYaml(player);
+		
+		if(!playerConfig.contains("rank")){
+			playerConfig.add("rank", "member");
+			playerConfig.save();
+		}
+		if(!playerConfig.contains("race")){
+			playerConfig.add("race", "none");
+			playerConfig.save();
+		}
+		if(!playerConfig.contains("class")){
+			playerConfig.add("class", "citizen");
+			playerConfig.save();
+		}
 		e.setJoinMessage("");
-		if (!playerConfig.contains("race")) {
-			playerConfig.set("race", "none");
-			plugin.savePlayerConfig(player);
-			player.sendMessage("Set race to default");
-		}
-		if (!playerConfig.contains("class")) {
-			playerConfig.set("class", "Citizen");
-			plugin.savePlayerConfig(player);
-			player.sendMessage("Set class to default");
-		}
-		if (!playerConfig.contains("rank")) {
-			playerConfig.set("rank", "member");
-			plugin.savePlayerConfig(player);
-		}
 	}
 
 	@EventHandler

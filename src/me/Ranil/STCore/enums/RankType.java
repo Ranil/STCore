@@ -6,17 +6,23 @@ public enum RankType {
 	ADMIN, DEVELOPER, MOD, BUILDER, MEMBER;
 
 	public static RankType getRankFromString(String rank) {
-		rank = rank.toLowerCase();
-		switch (rank) {
-		case "admin":
-			return ADMIN;
-		case "developer":
-			return DEVELOPER;
-		case "mod":
-			return MOD;
-		case "builder":
-			return BUILDER;
-		default:
+		if (rank != null) {
+			rank = rank.toLowerCase();
+			switch (rank) {
+			case "admin":
+				return ADMIN;
+			case "developer":
+				return DEVELOPER;
+			case "mod":
+				return MOD;
+			case "builder":
+				return BUILDER;
+			case "member":
+				return MEMBER;
+			default:
+				return MEMBER;
+			}
+		} else {
 			return MEMBER;
 		}
 	}
@@ -31,6 +37,8 @@ public enum RankType {
 			return ChatColor.DARK_GRAY + "❅ ";
 		case BUILDER:
 			return ChatColor.LIGHT_PURPLE + "❆";
+		case MEMBER:
+			return "";
 		default:
 			return "";
 		}
