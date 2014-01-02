@@ -54,9 +54,6 @@ public class ShatteredTears extends JavaPlugin {
 
 		this.config = getConfig();
 
-		for (Player p : Bukkit.getOnlinePlayers()) {
-			reloadPlayerConfig(p);
-		}
 	}
 
 	public void onDisable() {
@@ -70,16 +67,12 @@ public class ShatteredTears extends JavaPlugin {
 	}
 
 	public void reloadPlayerConfig(Player player) {
-		if (playerFile == null) {
-			playerFile = new File(playerDir, player.getName() + ".yml");
-		}
+		playerFile = new File(playerDir, player.getName() + ".yml");
 		playerConfig = YamlConfiguration.loadConfiguration(playerFile);
 	}
 
 	public FileConfiguration getPlayerConfig(Player player) {
-		if (playerConfig == null) {
-			reloadPlayerConfig(player);
-		}
+		reloadPlayerConfig(player);
 		return playerConfig;
 	}
 

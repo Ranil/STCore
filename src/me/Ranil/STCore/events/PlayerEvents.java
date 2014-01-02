@@ -27,9 +27,13 @@ public class PlayerEvents implements Listener {
 	public void onPlayerChat(AsyncPlayerChatEvent e) {
 		Player player = e.getPlayer();
 		FileConfiguration playerConfig = plugin.getPlayerConfig(player);
-		RankType rank = plugin.getRank(player);
-		RaceType race = plugin.getRace(player);
-		ClassType classType = plugin.getClass(player);
+		RankType rank = RankType.getRankFromString(playerConfig
+				.getString("rank"));
+		RaceType race = RaceType.getRaceFromString(playerConfig
+				.getString("race"));
+		;
+		ClassType classType = ClassType.getClassFromString(playerConfig
+				.getString("class"));
 		e.setFormat(RankType.getPrefix(rank) + ChatColor.GRAY + "["
 				+ RaceType.getAbrev(race) + " "
 				+ ClassType.classAbrev(classType) + ChatColor.GRAY + "]"
@@ -51,7 +55,7 @@ public class PlayerEvents implements Listener {
 			plugin.savePlayerConfig(player);
 			player.sendMessage("Set class to default");
 		}
-		if(!playerConfig.contains("rank")){
+		if (!playerConfig.contains("rank")) {
 			playerConfig.set("rank", "member");
 			plugin.savePlayerConfig(player);
 		}
