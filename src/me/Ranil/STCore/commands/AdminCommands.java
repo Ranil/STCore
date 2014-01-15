@@ -62,7 +62,8 @@ public class AdminCommands implements CommandExecutor {
 						Player targetPlayer = Bukkit.getServer()
 								.getPlayerExact(args[0]);
 						if (RaceType.getRaceFromString(args[1].toLowerCase()) != null) {
-							PlayerFile playerConfig = plugin.getPlayerYaml(targetPlayer);
+							PlayerFile playerConfig = plugin
+									.getPlayerYaml(targetPlayer);
 							playerConfig.set("race", args[1].toLowerCase());
 							player.sendMessage(ChatColor.AQUA
 									+ "Set "
@@ -92,7 +93,8 @@ public class AdminCommands implements CommandExecutor {
 						Player targetPlayer = Bukkit.getServer()
 								.getPlayerExact(args[0]);
 						if (ClassType.getClassFromString(args[1].toLowerCase()) != null) {
-							PlayerFile playerConfig = plugin.getPlayerYaml(targetPlayer);
+							PlayerFile playerConfig = plugin
+									.getPlayerYaml(targetPlayer);
 							playerConfig.set("class", args[1].toLowerCase());
 							player.sendMessage(ChatColor.AQUA
 									+ "Set "
@@ -123,8 +125,9 @@ public class AdminCommands implements CommandExecutor {
 						Player targetPlayer = Bukkit.getServer()
 								.getPlayerExact(args[0]);
 						if (RankType.getRankFromString(args[1].toLowerCase()) != null) {
-							
-							PlayerFile playerConfig = plugin.getPlayerYaml(targetPlayer);
+
+							PlayerFile playerConfig = plugin
+									.getPlayerYaml(targetPlayer);
 							playerConfig.set("rank", args[1].toLowerCase());
 							player.sendMessage(ChatColor.AQUA
 									+ "Set "
@@ -162,6 +165,8 @@ public class AdminCommands implements CommandExecutor {
 					item.getItemMeta().setDisplayName(line);
 				}
 			}
+
+			
 		}
 
 		return false;
