@@ -1,18 +1,22 @@
 package me.Ranil.STCore.events;
 
+import java.util.List;
+
 import me.Ranil.STCore.ShatteredTears;
 import me.Ranil.STCore.api.PlayerFile;
 import me.Ranil.STCore.enums.ClassType;
 import me.Ranil.STCore.enums.RaceType;
 import me.Ranil.STCore.enums.RankType;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 public class PlayerEvents implements Listener {
@@ -72,6 +76,17 @@ public class PlayerEvents implements Listener {
 					attacker.sendMessage(ChatColor.RED
 							+ "You can't attack players in your faction!");
 				}
+			}
+		}
+	}
+	
+	@EventHandler
+	public void onInteract(PlayerInteractEvent e){
+		Player p = e.getPlayer();
+		List<Entity> ent = p.getNearbyEntities(10, 10, 10);
+		for(Entity entity : ent){
+			if(p.hasLineOfSight(entity)){
+				//do stuff
 			}
 		}
 	}
